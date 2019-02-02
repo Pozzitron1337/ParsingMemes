@@ -8,4 +8,5 @@ public class DriversProperties {
         System.setProperty("webdriver.chrome.driver","D:\\PROJECTS\\JavaProjects\\ParsingMemes\\drivers\\chromedriver.exe");
 
     }
+
 }

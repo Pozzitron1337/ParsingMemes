@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,7 +22,9 @@ public class DinamicProxy {
     public void getProxyFromfreeproxylistnet(){
         DriversProperties.FirefoxProperty();
 
-        WebDriver driver =new FirefoxDriver();
+        FirefoxOptions firefoxOptions=new FirefoxOptions();
+        firefoxOptions.setHeadless(true);
+        WebDriver driver =new FirefoxDriver(firefoxOptions);
         WebDriverWait wait=new WebDriverWait(driver,5);
 
         driver.get("https://free-proxy-list.net/");

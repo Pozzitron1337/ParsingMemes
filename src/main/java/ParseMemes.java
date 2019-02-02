@@ -11,7 +11,7 @@ public class ParseMemes {
 
         DriversProperties.FirefoxProperty();
         DinamicProxy dinamicproxy=new DinamicProxy();
-        //System.out.println(dinamicproxy.getAdress());
+        System.out.println(dinamicproxy.getAdress());
         String httpproxy=dinamicproxy.getAdress();
         Proxy proxy=new Proxy();
         proxy.setHttpProxy(httpproxy).setFtpProxy(httpproxy).setSslProxy(httpproxy).setSslProxy(httpproxy);
@@ -23,7 +23,7 @@ public class ParseMemes {
 
         WebDriver driver=new FirefoxDriver(firefoxOptions);
         driver.get("https://vk.com");
-        driver.get("http://2ip.ru");//succses
+
 
 
 
