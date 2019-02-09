@@ -1,4 +1,4 @@
-package Parsing;
+package DriverProperties;
 
 public class DriversProperties {
 

@@ -5,17 +5,21 @@ import java.util.List;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import DriverProperties.DriversProperties;
 import ProxyVPN.VPN;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class ParseMemes {
+
+
+
 
     public static void parseMemeFromvkcom(){
         DriversProperties.FirefoxProperty();
@@ -35,11 +39,13 @@ public class ParseMemes {
             WebDriverWait waitwall=new WebDriverWait(driver,30);
             try {
                 driver.get("http://vk.com/4ch");
-            }catch (WebDriverException webdriverexception){
+                waitwall.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@class,'wall_module') and contains(@id,'public_wall')]")));
+            }
+            catch (WebDriverException webdriverexception) {
                 vpn.getAnotherAdress();
                 continue;
             }
-            waitwall.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@class,'wall_module') and contains(@id,'public_wall')]")));
+
             List<WebElement> webElements=driver.findElements(By.xpath("//div[@class='wall_text']//div[@class='page_post_sized_thumbs  clear_fix']//a[contains(@class,'page_post_thumb_wrap')]"));
             if(webElements.size()==0){
                 vpn.getAnotherAdress();
@@ -65,6 +71,7 @@ public class ParseMemes {
                     System.out.println(s);
                 }
                 flag=false;
+                driver.quit();
             }
         }
     }
