@@ -7,8 +7,7 @@ import java.sql.SQLException;
 
 public class MemeDatabase extends Database {
 
-    private Connection connection;
-
+    protected Connection connection;
     MemeDatabase(String url,String user,String password){
         URL=url;
         USER=user;
@@ -19,5 +18,11 @@ public class MemeDatabase extends Database {
             e.printStackTrace();
         }
     }
-
+    public void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

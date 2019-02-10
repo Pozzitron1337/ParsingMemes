@@ -15,13 +15,13 @@ public class DinamicProxy {
     private int numberOfRaw;
 
 
-    public DinamicProxy(){
+    public DinamicProxy(String region){
         numberOfRaw=1;
-        getProxyFromfreeproxylistnet();
+        getProxyFromfreeproxylistnet(region);
     }
 
 
-    public void getProxyFromfreeproxylistnet(){
+    public void getProxyFromfreeproxylistnet(String region){
         DriversProperties.FirefoxProperty();
 
         FirefoxOptions firefoxOptions=new FirefoxOptions();
@@ -32,9 +32,9 @@ public class DinamicProxy {
         driver.get("https://free-proxy-list.net/");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='proxylisttable']")));
 
-        WebElement selectelementbyregion=driver.findElement(By.xpath("//table[@id='proxylisttable']//th[3]//select"));
-        Select selectbyregion=new Select(selectelementbyregion);
-        selectbyregion.selectByValue("RU");
+        WebElement selectElementByRegion=driver.findElement(By.xpath("//table[@id='proxylisttable']//th[3]//select"));
+        Select selectByRegion=new Select(selectElementByRegion);
+        selectByRegion.selectByValue(region);
 
         this.ip=driver.findElement(By.xpath("//tbody/tr["+this.numberOfRaw+"]/td[1]")).getText();
         this.port=driver.findElement(By.xpath("//tbody/tr["+this.numberOfRaw+"]/td[2]")).getText();
