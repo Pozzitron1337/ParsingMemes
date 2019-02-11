@@ -2,14 +2,16 @@ package Parsing;
 
 import Database.MemeDatabaseFromvkcom;
 
+import java.util.Date;
+
 
 public class Main {
 
     public static void main(String[] args) {
 
-
-       ParseMemes.ParseMemeFromvkcom();
-        /*MemeDatabaseFromvkcom vk=new MemeDatabaseFromvkcom("jdbc:mysql://localhost:3306/memes?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false","root","1234");
-        vk.addMeme(3,"sda","dasd");*/
+        Date t1=new Date();
+        ParseMemes.ParseMemeFromvkcom();
+        Date t2=new Date();
+        System.out.println(t2.getTime()-t1.getTime());
     }
 }

@@ -1,6 +1,5 @@
 package Parsing;
 
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,26 +20,29 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ParseMemes {
     public static void ParseMemeFromvkcom(){
         DriversProperties.FirefoxProperty();
-        VPN vpn=new VPN("RU");
         MemeDatabaseFromvkcom vk=new MemeDatabaseFromvkcom("jdbc:mysql://localhost:3306/memes?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false","root","1234");
         Map<Integer,String> publics=vk.getPublics();
+        if(publics.isEmpty())
+            return;
+        VPN vpn=new VPN("RU");
+        WebDriver driver=null;
         for(int key:publics.keySet()){
-            Pattern patternPublicName=Pattern.compile("vk\\.com\\/(.*)");
+            Pattern patternPublicName=Pattern.compile("vk.com\\/(.*)");
             Matcher matcherPublicName=patternPublicName.matcher(publics.get(key));
             matcherPublicName.find();
             String publicName=matcherPublicName.group(1);
             boolean flag=true;
             while (flag){
                 System.out.println(vpn.getAdress());
-                String httpproxy=vpn.getAdress();
+                String httpProxy=vpn.getAdress();
                 Proxy proxy=new Proxy();
-                proxy.setHttpProxy(httpproxy).setFtpProxy(httpproxy).setSslProxy(httpproxy).setSslProxy(httpproxy);
+                proxy.setHttpProxy(httpProxy).setFtpProxy(httpProxy).setSslProxy(httpProxy).setSslProxy(httpProxy);
                 DesiredCapabilities capabilities=new DesiredCapabilities();
                 capabilities.setCapability("proxy",proxy);
                 FirefoxOptions firefoxOptions=new FirefoxOptions(capabilities);
                 firefoxOptions.setProxy(proxy);
                 firefoxOptions.setHeadless(true);
-                WebDriver driver=new FirefoxDriver(firefoxOptions);
+                driver=new FirefoxDriver(firefoxOptions);
                 WebDriverWait waitwall=new WebDriverWait(driver,30);
                 try {
                     driver.get(publics.get(key));
@@ -68,15 +70,14 @@ public class ParseMemes {
                         Matcher matcherMemeLink = patternMemeLink.matcher(link);
                         matcherMemeLink.find();
                         System.out.println(matcherMemeLink.group(1));
-                        vk.addMeme(key,publics.get(key),matcherMemeLink.group(1));
+                        vk.addMeme(key,publicName,matcherMemeLink.group(1));
                         //links.set(links.indexOf(link), matcherMemeLink.group(1));
                     }
                     links.clear();
                     flag = false;
                     }
-                driver.quit();
             }
-
+            driver.quit();
         }
         vk.closeConnection();
     }
